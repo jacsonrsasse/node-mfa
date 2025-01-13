@@ -1,10 +1,5 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 import Fastify from 'fastify';
 import { authRoutes } from './router';
-
 
 const server = Fastify();
 
@@ -25,4 +20,4 @@ const start = async () => {
   }
 };
 
-start();
+export { start };

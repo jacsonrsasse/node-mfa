@@ -1,23 +1,6 @@
-import Fastify from 'fastify';
 import dotenv from 'dotenv';
+import { start } from './infra/http/server';
 
 dotenv.config();
-
-const server = Fastify();
-
-server.get('/', async (request, reply) => {
-  return { message: 'Hello, Fastify with TypeScript!' };
-});
-
-const start = async () => {
-  try {
-    const port = process.env.PORT || 3000;
-    await server.listen({ port: Number(port), host: '0.0.0.0' });
-    console.log(`Server running on http://localhost:${port}`);
-  } catch (err) {
-    server.log.error(err);
-    process.exit(1);
-  }
-};
 
 start();

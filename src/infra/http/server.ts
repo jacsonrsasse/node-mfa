@@ -7,9 +7,9 @@ server.get('/', async (request, reply) => {
   return { message: 'Hello, Fastify with TypeScript!' };
 });
 
-server.register(authRoutes, { prefix: '/auth'})
+server.register(authRoutes, { prefix: '/auth' });
 
-const start = async () => {
+const startServer = async () => {
   try {
     const port = process.env.PORT || 3000;
     await server.listen({ port: Number(port), host: '0.0.0.0' });
@@ -20,4 +20,4 @@ const start = async () => {
   }
 };
 
-export { start };
+export { startServer };

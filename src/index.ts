@@ -1,6 +1,9 @@
 import dotenv from 'dotenv';
-import { start } from './infra/http/server';
+import { startServer } from './infra';
+import { DrizzleClientService } from './infra/db/drizzle-client.service';
 
 dotenv.config();
 
-start();
+DrizzleClientService.initDatabase();
+
+startServer();

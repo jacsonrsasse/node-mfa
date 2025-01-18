@@ -1,9 +1,9 @@
 import Fastify from 'fastify';
-import { authRoutes } from './router';
+import authRoutes from 'src/presentation/routes/auth.routes';
 
 const server = Fastify();
 
-server.get('/', async (request, reply) => {
+server.get('/', async () => {
   return { message: 'Hello, Fastify with TypeScript!' };
 });
 

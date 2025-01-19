@@ -1,11 +1,8 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyInstance } from 'fastify';
+import { makeAuthControllerFactory } from '../factories/make-auth-controller.factory';
 
-const authRoutes = (fastify: FastifyInstance) => {
-  fastify.get('/', (request: FastifyRequest, reply: FastifyReply) =>
-    reply.send({
-      message: 'Get in Auth',
-    }),
-  );
+export const authRoutes = (fastify: FastifyInstance) => {
+  const authController = makeAuthControllerFactory();
+
+  fastify.post('/register', authController.register.bind(authController));
 };
-
-export default authRoutes;

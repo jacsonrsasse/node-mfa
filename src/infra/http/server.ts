@@ -1,5 +1,5 @@
 import Fastify from 'fastify';
-import authRoutes from 'src/presentation/routes/auth.routes';
+import { authRoutes } from 'src/presentation/routes/auth.routes';
 
 const server = Fastify();
 

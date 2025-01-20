@@ -6,21 +6,15 @@ export const userTable = sqliteTable('user', {
   name: text().notNull(),
   email: text().unique().notNull(),
   password: text().notNull(),
-  createdAt: text('created_at').default(
-    sql`datetime(current_timestamp, 'localtime')`,
-  ),
+  createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const userToken = sqliteTable('user_token', {
   id: text('user_token_id').primaryKey().notNull(),
   userId: integer('user_id').references(() => userTable.id),
   refreshToken: text('refresh_token').notNull(),
-  expiresAt: text('expires_at').default(
-    sql`datetime(current_timestamp, 'localtime', '1 year')`,
-  ),
-  createdAt: text('created_at').default(
-    sql`datetime(current_timestamp, 'localtime')`,
-  ),
+  expiresAt: text('expires_at').notNull(),
+  createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const userSecondFactor = sqliteTable('user_second_factor', {
@@ -29,7 +23,5 @@ export const userSecondFactor = sqliteTable('user_second_factor', {
     .references(() => userTable.id),
   hash: text().notNull(),
   validatedAt: text('validated_at'),
-  createdAt: text('created_at').default(
-    sql`datetime(current_timestamp, 'localtime')`,
-  ),
+  createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
 });

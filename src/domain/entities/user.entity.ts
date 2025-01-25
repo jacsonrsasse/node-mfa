@@ -1,16 +1,25 @@
-import { UserData } from '../interfaces/user-data.interface';
+import { ChangeTypeToString } from '@shared/utils/change-type-to-string.util';
+import { ObjetoToType } from '@shared/utils/object-to-type.util';
+
+export type UserData = ObjetoToType<ChangeTypeToString<User, 'createdAt'>>;
 
 export class User {
   constructor(
-    private name: string,
-    private email: string,
-    private password: string,
-    private id?: number,
-    private createdAt?: Date,
+    readonly name: string,
+    readonly email: string,
+    readonly password: string,
+    readonly id?: number,
+    readonly createdAt?: Date,
   ) {}
 
   static create(userData: UserData): User {
-    const { name, email, password, id, createdAt } = userData;
+    const { name, email, password, id } = userData;
+
+    let createdAt: Date | undefined;
+    if (userData.createdAt) {
+      createdAt = new Date(userData.createdAt);
+    }
+
     return new User(name, email, password, id, createdAt);
   }
 }

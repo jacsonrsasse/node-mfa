@@ -9,13 +9,13 @@ export const userTable = sqliteTable('user', {
   createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const userToken = sqliteTable('user_token', {
-  id: text('user_token_id').primaryKey().notNull(),
-  userId: integer('user_id').references(() => userTable.id),
-  refreshToken: text('refresh_token').notNull(),
-  expiresAt: text('expires_at').notNull(),
-  createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
-});
+// export const userToken = sqliteTable('user_token', {
+//   id: text('user_token_id').primaryKey().notNull(),
+//   userId: integer('user_id').references(() => userTable.id),
+//   refreshToken: text('refresh_token').notNull(),
+//   expiresAt: text('expires_at').notNull(),
+//   createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
+// });
 
 export const userSecondFactor = sqliteTable('user_second_factor', {
   userId: integer('user_id')

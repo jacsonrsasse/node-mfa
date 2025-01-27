@@ -1,8 +1,8 @@
 import { FastifyInstance } from 'fastify';
-import { makeAuthControllerFactory } from '../factories/make-auth-controller.factory';
+import { AuthControllerFacotry } from '../factories/auth-controller.factory';
 
 export const authRoutes = (fastify: FastifyInstance) => {
-  const authController = makeAuthControllerFactory();
+  const signUpController = AuthControllerFacotry.createSignUp();
 
-  fastify.post('/register', authController.register.bind(authController));
+  fastify.post('/register', signUpController.handle.bind(signUpController));
 };

@@ -3,18 +3,24 @@ import { CreateUserDTO } from 'src/application/dtos/create-user.dto';
 import { CreateUserUseCase } from 'src/application/interfaces/create-user-usecase.interface';
 import { Validator } from 'src/domain/validators/validator.interface';
 
-export class AuthController {
+export class SignUpController {
   constructor(
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly createUserValidator: Validator<Error, CreateUserDTO>,
   ) {}
 
-  register(request: FastifyRequest, response: FastifyReply) {
+  async handle(request: FastifyRequest, response: FastifyReply) {
     const validateResult = this.createUserValidator.validate(request.body);
     if (validateResult.isLeft()) {
-      response.status(400).send(validateResult.value.message);
+      return response.status(400).send(validateResult.value);
     }
 
-    response.send(validateResult.value);
+    const createUser = validateResult.value;
+    const createResult = await this.createUserUseCase.execute(createUser);
+    if (createResult.isLeft()) {
+      return response.status(400).send(createResult.value);
+    }
+
+    return response.status(201).send(createResult.value);
   }
 }

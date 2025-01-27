@@ -9,7 +9,7 @@ export class ZodValidator<T> implements Validator<Error, T> {
     const { data: parsedData, error } = this.schema.safeParse(data);
 
     if (error && error.errors.length) {
-      return left(new Error(error.toString()));
+      return left(error);
     }
 
     return right(parsedData);

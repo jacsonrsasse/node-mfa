@@ -1,9 +1,9 @@
-import { DomainException } from './domain.exception';
+import { Exception } from '@shared/exception/exception';
 
-export class UserNotFoundByCredentials extends DomainException(
+export class UserNotFoundByCredentials extends Exception(
   'UserNotFoundByCredentials',
 ) {
   constructor() {
-    super('User not found with these credentials');
+    super('User not found with these credentials', 404);
   }
 }

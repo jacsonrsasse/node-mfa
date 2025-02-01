@@ -1,6 +1,6 @@
 import { configDotenv } from 'dotenv';
-import { startServer } from './infra/http/server';
-import { DrizzleClientService } from './infra/db/drizzle-client.service';
+import { startServer } from './infra/http/fastify/server';
+import { DrizzleClientService } from './infra/db/drizzle/drizzle-client.service';
 
 configDotenv();
 

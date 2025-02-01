@@ -1,7 +1,7 @@
 import { User } from 'src/domain/entities/user.entity';
 import { UserRepository } from 'src/domain/repositories/user.repository';
-import { DrizzleClientService } from '../drizzle/drizzle-client.service';
-import { userTable } from '../drizzle/schema';
+import { DrizzleClientService } from '../drizzle-client.service';
+import { userTable } from '../schema';
 import { eq } from 'drizzle-orm';
 import { UserMapper } from 'src/domain/mappers/user.mapper';
 

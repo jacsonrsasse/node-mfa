@@ -1,5 +1,5 @@
 import { Either, left, right } from '@shared/monad/either';
-import { Validator } from 'src/domain/validators/validator.interface';
+import { Validator } from 'src/infra/validators/validator.interface';
 import { ZodSchema } from 'zod';
 
 export class ZodValidator<T> implements Validator<Error, T> {

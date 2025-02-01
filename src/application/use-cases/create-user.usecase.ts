@@ -2,13 +2,13 @@ import { Either, left, right } from '@shared/monad/either';
 import { User } from 'src/domain/entities/user.entity';
 import { UserRepository } from 'src/domain/repositories/user.repository';
 
-import { EmailAlreadyInUseException } from 'src/domain/exceptions/email-already-in-use.exception';
-import { UserCreationFailed } from 'src/domain/exceptions/user-creation.exception';
+import { EmailAlreadyInUseException } from 'src/application/exceptions/email-already-in-use.exception';
+import { UserCreationFailed } from 'src/application/exceptions/user-creation.exception';
 
 import {
   CreateUserUseCase as UseCase,
   UserCreationExceptions,
-} from '../interfaces/create-user-usecase.interface';
+} from '../interfaces/use-cases/create-user-usecase.interface';
 import { CreateUserDTO } from '../dtos/create-user.dto';
 
 export class CreateUserUseCase implements UseCase {

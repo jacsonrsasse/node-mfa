@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { CreateUserDTO } from 'src/application/dtos/create-user.dto';
-import { CreateUserUseCase } from 'src/application/interfaces/create-user-usecase.interface';
-import { Validator } from 'src/domain/validators/validator.interface';
+import { CreateUserUseCase } from 'src/application/interfaces/use-cases/create-user-usecase.interface';
+import { Validator } from 'src/infra/validators/validator.interface';
 
 export class SignUpController {
   constructor(

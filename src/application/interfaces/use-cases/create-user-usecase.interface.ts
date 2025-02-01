@@ -7,7 +7,7 @@ export type UserCreationExceptions =
   | EmailAlreadyInUseException
   | UserCreationException;
 
-export interface CreateUserUseCase {
+export interface ICreateUserUseCase {
   execute(
     createUser: CreateUserDTO,
   ): Promise<Either<UserCreationExceptions, boolean>>;

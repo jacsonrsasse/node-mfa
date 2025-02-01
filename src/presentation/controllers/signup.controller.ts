@@ -1,11 +1,11 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { CreateUserDTO } from 'src/application/dtos/create-user.dto';
-import { CreateUserUseCase } from 'src/application/interfaces/use-cases/create-user-usecase.interface';
-import { Validator } from 'src/infra/validators/validator.interface';
+import { CreateUserDTO } from '@application/dtos/create-user.dto';
+import { ICreateUserUseCase } from '@application/interfaces/use-cases/create-user-usecase.interface';
+import { Validator } from '@infra/validators/validator.interface';
 
 export class SignUpController {
   constructor(
-    private readonly createUserUseCase: CreateUserUseCase,
+    private readonly createUserUseCase: ICreateUserUseCase,
     private readonly createUserValidator: Validator<Error, CreateUserDTO>,
   ) {}
 

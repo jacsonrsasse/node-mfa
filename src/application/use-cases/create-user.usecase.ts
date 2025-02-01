@@ -1,18 +1,19 @@
 import { Either, left, right } from '@shared/monad/either';
-import { User } from 'src/domain/entities/user.entity';
-import { UserRepository } from 'src/domain/repositories/user.repository';
+import { User } from '@domain/entities/user.entity';
 
-import { EmailAlreadyInUseException } from 'src/application/exceptions/email-already-in-use.exception';
-import { UserCreationFailed } from 'src/application/exceptions/user-creation.exception';
-
+import { IUserRepository } from '@application/interfaces/repositories/user.repository';
 import {
-  CreateUserUseCase as UseCase,
+  ICreateUserUseCase,
   UserCreationExceptions,
-} from '../interfaces/use-cases/create-user-usecase.interface';
-import { CreateUserDTO } from '../dtos/create-user.dto';
+} from '@application/interfaces/use-cases/create-user-usecase.interface';
 
-export class CreateUserUseCase implements UseCase {
-  constructor(private readonly userRepository: UserRepository) {}
+import { CreateUserDTO } from '@application/dtos/create-user.dto';
+
+import { EmailAlreadyInUseException } from '@application/exceptions/email-already-in-use.exception';
+import { UserCreationException } from '@application/exceptions/user-creation.exception';
+
+export class CreateUserUseCase implements ICreateUserUseCase {
+  constructor(private readonly userRepository: IUserRepository) {}
 
   async execute(
     createUser: CreateUserDTO,
@@ -26,7 +27,7 @@ export class CreateUserUseCase implements UseCase {
 
     const result = await this.userRepository.create(user);
     if (!result) {
-      return left(new UserCreationFailed());
+      return left(new UserCreationException());
     }
 
     return right(true);

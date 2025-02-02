@@ -9,8 +9,10 @@ import {
 
 import { CreateUserDTO } from '@application/dtos/create-user.dto';
 
-import { EmailAlreadyInUseException } from '@application/exceptions/email-already-in-use.exception';
-import { UserCreationException } from '@application/exceptions/user-creation.exception';
+import {
+  EmailAlreadyInUseException,
+  UserCreationException,
+} from '@shared/exceptions';
 
 export class CreateUserUseCase implements ICreateUserUseCase {
   constructor(private readonly userRepository: IUserRepository) {}

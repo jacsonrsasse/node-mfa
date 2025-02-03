@@ -13,9 +13,13 @@ import {
   EmailAlreadyInUseException,
   UserCreationException,
 } from '@shared/exceptions';
+import { IHashingService } from '@infra/hashing';
 
 export class CreateUserUseCase implements ICreateUserUseCase {
-  constructor(private readonly userRepository: IUserRepository) {}
+  constructor(
+    private readonly userRepository: IUserRepository,
+    private readonly hashingService: IHashingService,
+  ) {}
 
   async execute(
     createUser: CreateUserDTO,
@@ -25,7 +29,11 @@ export class CreateUserUseCase implements ICreateUserUseCase {
       return left(new EmailAlreadyInUseException());
     }
 
-    const user = User.create(createUser);
+    const password = await this.hashingService.encrypt(createUser.password);
+    const user = User.create({
+      ...createUser,
+      password,
+    });
 
     const result = await this.userRepository.create(user);
     if (!result) {

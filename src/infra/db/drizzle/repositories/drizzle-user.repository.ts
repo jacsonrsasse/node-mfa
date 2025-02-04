@@ -3,7 +3,7 @@ import { IUserRepository } from '@domain/interfaces/repositories/user.repository
 import { DrizzleClientService } from '../drizzle-client.service';
 import { userTable } from '../schema';
 import { eq } from 'drizzle-orm';
-import { UserMapper } from 'src/domain/mappers/user.mapper';
+import { UserMapper } from '@infra/db/drizzle/mappers/user.mapper';
 
 export class DrizzleUserRepository implements IUserRepository {
   async create(user: User): Promise<boolean> {

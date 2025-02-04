@@ -1,4 +1,4 @@
-import { User, UserData } from '../entities/user.entity';
+import { User, UserData } from '../../../../domain/entities/user.entity';
 
 export class UserMapper {
   static fromRepository(userData: UserData): User {

@@ -2,7 +2,7 @@ import { ChangeTypeToString } from '@shared/utils/change-type-to-string.util';
 import { ObjetoToType } from '@shared/utils/object-to-type.util';
 
 export type UserTokenData = ObjetoToType<
-  ChangeTypeToString<UserToken, 'createdAt'>
+  ChangeTypeToString<UserToken, 'createdAt' | 'expiresAt'>
 >;
 
 export class UserToken {

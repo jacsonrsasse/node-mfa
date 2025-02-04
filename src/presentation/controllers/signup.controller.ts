@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { CreateUserDTO } from '@application/dtos/create-user.dto';
-import { ICreateUserUseCase } from '@application/interfaces/use-cases/create-user-usecase.interface';
+import { ICreateUserUseCase } from '@domain/interfaces/use-cases/create-user-usecase.interface';
 import { Validator } from '@infra/validators/validator.interface';
 import { ValidationException } from '@shared/exceptions';
 import { success, withError } from '@infra/http/fastify/response';

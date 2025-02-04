@@ -1,11 +1,11 @@
 import { Either, left, right } from '@shared/monad/either';
 import { User } from '@domain/entities/user.entity';
 
-import { IUserRepository } from '@application/interfaces/repositories/user.repository';
+import { IUserRepository } from '@domain/interfaces/repositories/user.repository';
 import {
   ICreateUserUseCase,
   UserCreationExceptions,
-} from '@application/interfaces/use-cases/create-user-usecase.interface';
+} from '@domain/interfaces/use-cases/create-user-usecase.interface';
 
 import { CreateUserDTO } from '@application/dtos/create-user.dto';
 

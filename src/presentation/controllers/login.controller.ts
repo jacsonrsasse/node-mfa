@@ -1,5 +1,5 @@
 import { LoginDTO } from '@application/dtos/login.dto';
-import { ILoginUseCase } from '@application/interfaces/use-cases/login-usecase.interface';
+import { ILoginUseCase } from '@domain/interfaces/use-cases/login-usecase.interface';
 import { success, withError } from '@infra/http/fastify/response';
 import { Validator } from '@infra/validators/validator.interface';
 import { ValidationException } from '@shared/exceptions';

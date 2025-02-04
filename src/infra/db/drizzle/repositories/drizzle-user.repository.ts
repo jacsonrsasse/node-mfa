@@ -1,5 +1,5 @@
 import { User } from 'src/domain/entities/user.entity';
-import { IUserRepository } from '@application/interfaces/repositories/user.repository';
+import { IUserRepository } from '@domain/interfaces/repositories/user.repository';
 import { DrizzleClientService } from '../drizzle-client.service';
 import { userTable } from '../schema';
 import { eq } from 'drizzle-orm';

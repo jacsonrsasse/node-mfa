@@ -1,9 +1,9 @@
 import { LoginDTO } from '@application/dtos/login.dto';
-import { IUserRepository } from '@application/interfaces/repositories/user.repository';
+import { IUserRepository } from '@domain/interfaces/repositories/user.repository';
 import {
   ILoginUseCase,
   Response,
-} from '@application/interfaces/use-cases/login-usecase.interface';
+} from '@domain/interfaces/use-cases/login-usecase.interface';
 import { IHashingService } from '@infra/hashing';
 import { IJwtService } from '@infra/jwt/jwt.interface';
 import { UnauthorizedByCredentials } from '@shared/exceptions';

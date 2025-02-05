@@ -13,12 +13,12 @@ import {
   EmailAlreadyInUseException,
   UserCreationException,
 } from '@shared/exceptions';
-import { IHashingService } from '@infra/hashing';
+import { IEncryptgService } from '@infra/encrypt';
 
 export class CreateUserUseCase implements ICreateUserUseCase {
   constructor(
     private readonly userRepository: IUserRepository,
-    private readonly hashingService: IHashingService,
+    private readonly hashingService: IEncryptgService,
   ) {}
 
   async execute(
@@ -30,6 +30,10 @@ export class CreateUserUseCase implements ICreateUserUseCase {
     }
 
     const password = await this.hashingService.encrypt(createUser.password);
+    if (!password) {
+      return left(new UserCreationException());
+    }
+
     const user = User.create({
       ...createUser,
       password,

@@ -4,7 +4,7 @@ import {
   ILoginUseCase,
   Response,
 } from '@domain/interfaces/use-cases/login-usecase.interface';
-import { IHashingService } from '@infra/hashing';
+import { IEncryptgService } from '@infra/encrypt';
 import { IJwtService } from '@infra/jwt/jwt.interface';
 import { UnauthorizedByCredentials } from '@shared/exceptions';
 import { Either, left, right } from '@shared/monad/either';
@@ -12,7 +12,7 @@ import { Either, left, right } from '@shared/monad/either';
 export class LoginUseCase implements ILoginUseCase {
   constructor(
     private readonly userRepository: IUserRepository,
-    private readonly hashingService: IHashingService,
+    private readonly hashingService: IEncryptgService,
     private readonly jwtService: IJwtService,
   ) {}
 
@@ -24,11 +24,8 @@ export class LoginUseCase implements ILoginUseCase {
       return left(new UnauthorizedByCredentials());
     }
 
-    const matchPassword = await this.hashingService.compare(
-      login.password,
-      user.password,
-    );
-    if (!matchPassword) {
+    const decrypted = await this.hashingService.decrypt(user.password);
+    if (!decrypted || decrypted !== login.password) {
       return left(new UnauthorizedByCredentials());
     }
 

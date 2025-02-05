@@ -1,3 +1,4 @@
+import { env } from '@infra/env';
 import { IEncryptgService } from './encrypt.interface';
 import {
   createHmac,
@@ -15,7 +16,7 @@ export class NodeEncryptService implements IEncryptgService {
     return new Promise((resolve) => {
       try {
         const salt = randomBytes(16).toString('hex');
-        const key = scryptSync('chave-segura-encrypt', salt, 24);
+        const key = scryptSync(env.ENCRYPT_SECRET, salt, 24);
         const iv = randomBytes(16);
 
         const cipher = createCipheriv(this.secureAlgorithm, key, iv);
@@ -44,7 +45,7 @@ export class NodeEncryptService implements IEncryptgService {
       try {
         const [iv, encrypted, salt] = toDecrypt.split(':');
         const ivBuffer = Buffer.from(iv, 'hex');
-        const key = scryptSync('chave-segura-encrypt', salt, 24);
+        const key = scryptSync(env.ENCRYPT_SECRET, salt, 24);
 
         const decipher = createDecipheriv(this.secureAlgorithm, key, ivBuffer);
         let decrypted = '';
@@ -66,7 +67,7 @@ export class NodeEncryptService implements IEncryptgService {
   }
 
   hash(toHash: string): string {
-    return createHmac(this.hashAlgorithm, 'chave-segura')
+    return createHmac(this.hashAlgorithm, env.HASHING_SECRET)
       .update(toHash)
       .digest('hex');
   }

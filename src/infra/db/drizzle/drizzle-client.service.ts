@@ -1,3 +1,4 @@
+import { env } from '@infra/env';
 import Database from 'better-sqlite3';
 import { ExtractTablesWithRelations } from 'drizzle-orm';
 import {
@@ -11,7 +12,7 @@ export class DrizzleClientService {
   static transaction;
 
   static initDatabase() {
-    this.dbClient = drizzle(process.env.DB_FILE_NAME);
+    this.dbClient = drizzle(env.DB_FILE_NAME);
   }
 
   static getClient() {

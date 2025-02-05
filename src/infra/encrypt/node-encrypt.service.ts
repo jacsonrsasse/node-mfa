@@ -31,6 +31,7 @@ export class NodeEncryptService implements IEncryptgService {
         cipher.on('end', () =>
           resolve(`${iv.toString('hex')}:${encrypted}:${salt}`),
         );
+        cipher.on('error', () => resolve(null));
 
         cipher.write(toEncrypt);
         cipher.end();
@@ -42,27 +43,24 @@ export class NodeEncryptService implements IEncryptgService {
 
   decrypt(toDecrypt: string): Promise<string> {
     return new Promise((resolve) => {
-      try {
-        const [iv, encrypted, salt] = toDecrypt.split(':');
-        const ivBuffer = Buffer.from(iv, 'hex');
-        const key = scryptSync(env.ENCRYPT_SECRET, salt, 24);
+      const [iv, encrypted, salt] = toDecrypt.split(':');
+      const ivBuffer = Buffer.from(iv, 'hex');
+      const key = scryptSync(env.ENCRYPT_SECRET, salt, 24);
 
-        const decipher = createDecipheriv(this.secureAlgorithm, key, ivBuffer);
-        let decrypted = '';
+      const decipher = createDecipheriv(this.secureAlgorithm, key, ivBuffer);
+      let decrypted = '';
 
-        decipher.on('readable', () => {
-          let chunk;
-          while (null !== (chunk = decipher.read())) {
-            decrypted = chunk.toString('utf8');
-          }
-        });
-        decipher.on('end', () => resolve(decrypted));
+      decipher.on('readable', () => {
+        let chunk;
+        while (null !== (chunk = decipher.read())) {
+          decrypted = chunk.toString('utf8');
+        }
+      });
+      decipher.on('end', () => resolve(decrypted));
+      decipher.on('error', () => resolve(null));
 
-        decipher.write(encrypted, 'hex');
-        decipher.end();
-      } catch {
-        resolve(null);
-      }
+      decipher.write(encrypted, 'hex');
+      decipher.end();
     });
   }
 

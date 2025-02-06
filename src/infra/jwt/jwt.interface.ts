@@ -1,15 +1,14 @@
-export type JwtOptions = {
-  expiresIn?: '1h' | '1d';
-  subject?: string;
+export type JwtInput = {
+  subject: string;
   audience?: string;
-  type: 'access' | 'refresh';
+  payload?: object;
 };
 
-export type IJwtSignProps = {
-  payload?: any;
-  options?: JwtOptions;
+export type JwtOutput = {
+  accessToken: string;
+  refreshToken: string;
 };
 
 export interface IJwtService {
-  sign(props: IJwtSignProps): string | Promise<string>;
+  sign(options?: JwtInput): JwtOutput | Promise<JwtOutput>;
 }

@@ -3,7 +3,7 @@ import { UnauthorizedByCredentials } from '@shared/exceptions';
 import { Either } from '@shared/monad/either';
 
 export type Response = {
-  token: string;
+  accessToken: string;
   refreshToken: string;
 };
 

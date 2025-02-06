@@ -29,21 +29,11 @@ export class LoginUseCase implements ILoginUseCase {
       return left(new UnauthorizedByCredentials());
     }
 
-    const token = await this.jwtService.sign({
-      options: {
-        subject: user.id.toString(),
-        type: 'access',
-      },
-    });
-    const refreshToken = await this.jwtService.sign({
-      options: {
-        subject: user.id.toString(),
-        expiresIn: '1d',
-        type: 'refresh',
-      },
+    const { accessToken, refreshToken } = await this.jwtService.sign({
+      subject: user.id.toString(),
     });
     return right({
-      token,
+      accessToken,
       refreshToken,
     });
   }

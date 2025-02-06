@@ -11,10 +11,11 @@ import { loginSchema } from '@infra/validators/zod/schemas/login.schema';
 import { LoginUseCase } from '@application/use-cases/login.usecase';
 import { JwtService } from '@infra/jwt/jwt.service';
 
+const hashingService = new NodeEncryptService();
+const userRepository = new DrizzleUserRepository();
+
 export class AuthControllerFacotry {
   static createSignUp() {
-    const hashingService = new NodeEncryptService();
-    const userRepository = new DrizzleUserRepository();
     const createUserUseCase = new CreateUserUseCase(
       userRepository,
       hashingService,
@@ -27,8 +28,6 @@ export class AuthControllerFacotry {
   }
 
   static createLogin() {
-    const hashingService = new NodeEncryptService();
-    const userRepository = new DrizzleUserRepository();
     const jwtService = new JwtService();
     const loginUseCase = new LoginUseCase(
       userRepository,

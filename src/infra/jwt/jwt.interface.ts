@@ -11,4 +11,6 @@ export type JwtOutput = {
 
 export interface IJwtService {
   sign(options?: JwtInput): JwtOutput | Promise<JwtOutput>;
+
+  verify(jwt: string): boolean;
 }

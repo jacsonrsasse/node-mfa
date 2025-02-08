@@ -1,6 +1,10 @@
 import { env } from '@infra/env';
 import { IJwtService, JwtInput, JwtOutput } from './jwt.interface';
-import { sign as jwtSign, SignOptions } from 'jsonwebtoken';
+import {
+  sign as jwtSign,
+  verify as jwtVerify,
+  SignOptions,
+} from 'jsonwebtoken';
 
 export class JwtService implements IJwtService {
   sign({ payload, audience, subject }: JwtInput): JwtOutput {
@@ -37,5 +41,9 @@ export class JwtService implements IJwtService {
       accessToken,
       refreshToken,
     };
+  }
+
+  verify(jwt: string): any {
+    return jwtVerify(jwt, env.JWT_SECRET);
   }
 }

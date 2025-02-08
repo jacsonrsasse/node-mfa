@@ -22,7 +22,7 @@ export class JwtService implements IJwtService {
       },
       env.JWT_SECRET,
       {
-        expiresIn: 60 * 5,
+        expiresIn: '30 seconds',
         ...options,
       },
     );
@@ -43,7 +43,12 @@ export class JwtService implements IJwtService {
     };
   }
 
-  verify(jwt: string): any {
-    return jwtVerify(jwt, env.JWT_SECRET);
+  verify(jwt: string): boolean {
+    try {
+      const result = jwtVerify(jwt, env.JWT_SECRET);
+      return !!result;
+    } catch {
+      return false;
+    }
   }
 }

@@ -10,9 +10,11 @@ import { LoginDTO } from '@application/dtos/login.dto';
 import { loginSchema } from '@infra/validators/zod/schemas/login.schema';
 import { LoginUseCase } from '@application/use-cases/login.usecase';
 import { JwtService } from '@infra/jwt/jwt.service';
+import { DrizzleUserTokenRepository } from '@infra/db/drizzle/repositories/drizzle-user-token.repository';
 
 const hashingService = new NodeEncryptService();
 const userRepository = new DrizzleUserRepository();
+const userTokenRepository = new DrizzleUserTokenRepository();
 
 export class AuthControllerFacotry {
   static createSignUp() {
@@ -31,6 +33,7 @@ export class AuthControllerFacotry {
     const jwtService = new JwtService();
     const loginUseCase = new LoginUseCase(
       userRepository,
+      userTokenRepository,
       hashingService,
       jwtService,
     );

@@ -33,7 +33,6 @@ export const userTokenTable = sqliteTable(
       .references(() => userTable.id)
       .notNull(),
     refreshToken: text('refresh_token').notNull(),
-    expiresAt: text('expires_at').notNull(),
     createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
   },
   (table) => [

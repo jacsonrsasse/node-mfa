@@ -40,7 +40,6 @@ export class LoginUseCase implements ILoginUseCase {
       UserToken.create({
         userId: user.id,
         refreshToken,
-        expiresAt: '',
       }),
     );
 

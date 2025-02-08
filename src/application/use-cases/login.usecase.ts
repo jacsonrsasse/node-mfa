@@ -1,4 +1,6 @@
 import { LoginDTO } from '@application/dtos/login.dto';
+import { UserToken } from '@domain/entities/user-token.entity';
+import { IUserTokenRepository } from '@domain/interfaces/repositories/user-token.repository';
 import { IUserRepository } from '@domain/interfaces/repositories/user.repository';
 import {
   ILoginUseCase,
@@ -12,6 +14,7 @@ import { Either, left, right } from '@shared/monad/either';
 export class LoginUseCase implements ILoginUseCase {
   constructor(
     private readonly userRepository: IUserRepository,
+    private readonly userTokenRepository: IUserTokenRepository,
     private readonly hashingService: IEncryptgService,
     private readonly jwtService: IJwtService,
   ) {}
@@ -32,6 +35,15 @@ export class LoginUseCase implements ILoginUseCase {
     const { accessToken, refreshToken } = await this.jwtService.sign({
       subject: user.id.toString(),
     });
+
+    await this.userTokenRepository.create(
+      UserToken.create({
+        userId: user.id,
+        refreshToken,
+        expiresAt: '',
+      }),
+    );
+
     return right({
       accessToken,
       refreshToken,

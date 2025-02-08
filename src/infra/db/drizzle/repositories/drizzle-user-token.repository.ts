@@ -3,6 +3,7 @@ import { IUserTokenRepository } from '@domain/interfaces/repositories/user-token
 import { DrizzleClientService } from '../drizzle-client.service';
 import { userTokenTable } from '../schema';
 import { UserTokenMapper } from '../mappers/user-token.mapper';
+import { eq } from 'drizzle-orm';
 
 export class DrizzleUserTokenRepository implements IUserTokenRepository {
   async create(userToken: UserToken): Promise<boolean> {
@@ -16,7 +17,14 @@ export class DrizzleUserTokenRepository implements IUserTokenRepository {
     return !!result.length;
   }
 
-  findByRefresh(refreshToken: string): Promise<UserToken | null> {
-    throw new Error('Method not implemented.');
+  async findByRefresh(refreshToken: string): Promise<UserToken | null> {
+    const result = await DrizzleClientService.getClient()
+      .select()
+      .from(userTokenTable)
+      .where(eq(userTokenTable.refreshToken, refreshToken));
+
+    if (!result.length) return;
+
+    return UserTokenMapper.fromRepository(result[0]);
   }
 }

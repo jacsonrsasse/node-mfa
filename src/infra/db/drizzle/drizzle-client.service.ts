@@ -6,13 +6,14 @@ import {
   drizzle,
 } from 'drizzle-orm/better-sqlite3/driver';
 import { SQLiteTransaction } from 'drizzle-orm/sqlite-core';
+import * as schema from './schema';
 
 export class DrizzleClientService {
-  static dbClient: BetterSQLite3Database;
+  static dbClient: BetterSQLite3Database<typeof schema>;
   static transaction;
 
   static initDatabase() {
-    this.dbClient = drizzle(env.DB_FILE_NAME);
+    this.dbClient = drizzle(env.DB_FILE_NAME, { schema });
   }
 
   static getClient() {

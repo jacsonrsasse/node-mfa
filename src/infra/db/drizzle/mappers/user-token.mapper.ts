@@ -5,7 +5,7 @@ export class UserTokenMapper {
     return UserToken.create(userData);
   }
 
-  static toRepository({ refreshToken, expiresAt }: UserToken) {
+  static toRepository({ userId, refreshToken, expiresAt }: UserToken) {
     const year = expiresAt.getFullYear();
     const month = expiresAt.getMonth().toString().padStart(2, '0');
     const day = expiresAt.getDate().toString().padStart(2, '0');
@@ -14,6 +14,7 @@ export class UserTokenMapper {
     const seconds = expiresAt.getSeconds().toString().padStart(2, '0');
 
     return {
+      userId,
       refreshToken,
       expiresAt: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
     };

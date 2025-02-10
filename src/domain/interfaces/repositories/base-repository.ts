@@ -1,3 +1,5 @@
 export interface IBaseRepository<E> {
-  create(user: E): Promise<boolean>;
+  create(entity: E): Promise<boolean>;
+
+  delete(entity: E): Promise<boolean>;
 }

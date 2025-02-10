@@ -17,6 +17,14 @@ export class DrizzleUserTokenRepository implements IUserTokenRepository {
     return !!result.length;
   }
 
+  async delete(userToken: UserToken): Promise<boolean> {
+    const result = await DrizzleClientService.getClient()
+      .delete(userTokenTable)
+      .where(eq(userTokenTable.userId, userToken.userId))
+      .returning();
+    return !!result.length;
+  }
+
   async findByRefresh(refreshToken: string): Promise<UserToken | null> {
     const result = await DrizzleClientService.getClient()
       .select()

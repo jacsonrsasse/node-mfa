@@ -17,6 +17,14 @@ export class DrizzleUserRepository implements IUserRepository {
     return !!result.length;
   }
 
+  async delete(user: User): Promise<boolean> {
+    const result = await DrizzleClientService.getClient()
+      .delete(userTable)
+      .where(eq(userTable.id, user.id))
+      .returning();
+    return !!result.length;
+  }
+
   async findByEmail(email: string): Promise<User | null> {
     const userFromDb = await DrizzleClientService.getClient()
       .select()

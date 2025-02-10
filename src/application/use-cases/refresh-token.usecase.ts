@@ -19,13 +19,13 @@ export class RefreshTokenUseCase implements IRefreshTokenUseCase {
     refreshToken: string,
   ): Promise<Either<RefreshTokenExceptions, Response>> {
     if (!this.jwtService.verify(refreshToken)) {
-      left(new InvalidRefreshTokenException());
+      return left(new InvalidRefreshTokenException());
     }
 
     const userToken =
       await this.userTokenRepository.findByRefresh(refreshToken);
     if (!userToken) {
-      left(new InvalidRefreshTokenException());
+      return left(new InvalidRefreshTokenException());
     }
 
     const { userId } = userToken;
@@ -43,7 +43,7 @@ export class RefreshTokenUseCase implements IRefreshTokenUseCase {
 
     return right({
       accessToken,
-      refreshToken,
+      refreshToken: newRefreshToken,
     });
   }
 }

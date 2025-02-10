@@ -1,3 +1,4 @@
+import { UserToken } from '@domain/entities/user-token.entity';
 import { IUserTokenRepository } from '@domain/interfaces/repositories/user-token.repository';
 import { Response } from '@domain/interfaces/use-cases/login-usecase.interface';
 import {
@@ -21,9 +22,28 @@ export class RefreshTokenUseCase implements IRefreshTokenUseCase {
       left(new InvalidRefreshTokenException());
     }
 
+    const userToken =
+      await this.userTokenRepository.findByRefresh(refreshToken);
+    if (!userToken) {
+      left(new InvalidRefreshTokenException());
+    }
+
+    const { userId } = userToken;
+    const { accessToken, refreshToken: newRefreshToken } =
+      await this.jwtService.sign({
+        subject: userId.toString(),
+      });
+    await this.userTokenRepository.delete(userToken);
+    await this.userTokenRepository.create(
+      UserToken.create({
+        userId,
+        refreshToken: newRefreshToken,
+      }),
+    );
+
     return right({
-      accessToken: '',
-      refreshToken: '',
+      accessToken,
+      refreshToken,
     });
   }
 }

@@ -7,4 +7,5 @@ export const authRoutes = (fastify: FastifyInstance) => {
 
   fastify.post('/register', signUpController.handle.bind(signUpController));
   fastify.post('/login', loginController.handle.bind(loginController));
+  fastify.post('/refresh', loginController.handle.bind(loginController));
 };

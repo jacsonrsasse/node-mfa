@@ -11,8 +11,12 @@ import { loginSchema } from '@infra/validators/zod/schemas/login.schema';
 import { LoginUseCase } from '@application/use-cases/login.usecase';
 import { JwtService } from '@infra/jwt/jwt.service';
 import { DrizzleUserTokenRepository } from '@infra/db/drizzle/repositories/drizzle-user-token.repository';
+import { RefreshController } from '@presentation/controllers/refresh.controller';
+import { RefreshTokenUseCase } from '@application/use-cases/refresh-token.usecase';
+import { refreshTokenSchema } from '@infra/validators/zod/schemas/refresh-token.schema';
 
 const hashingService = new NodeEncryptService();
+const jwtService = new JwtService();
 const userRepository = new DrizzleUserRepository();
 const userTokenRepository = new DrizzleUserTokenRepository();
 
@@ -30,7 +34,6 @@ export class AuthControllerFacotry {
   }
 
   static createLogin() {
-    const jwtService = new JwtService();
     const loginUseCase = new LoginUseCase(
       userRepository,
       userTokenRepository,
@@ -39,5 +42,17 @@ export class AuthControllerFacotry {
     );
     const loginValidator = new ZodValidator<LoginDTO>(loginSchema);
     return new LoginController(loginUseCase, loginValidator);
+  }
+
+  static createRefreshToken() {
+    const refreshTokenUseCase = new RefreshTokenUseCase(
+      userTokenRepository,
+      jwtService,
+    );
+    const refreshTokenValidator = new ZodValidator<{ refreshToken: string }>(
+      refreshTokenSchema,
+    );
+
+    return new RefreshController(refreshTokenUseCase, refreshTokenValidator);
   }
 }

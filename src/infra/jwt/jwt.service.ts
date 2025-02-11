@@ -12,7 +12,7 @@ export class JwtService implements IJwtService {
       algorithm: 'HS256',
       audience: audience || '',
       subject: subject,
-      issuer: 'node-mfa-api',
+      issuer: env.ISSUER,
     } as SignOptions;
 
     const accessToken = jwtSign(

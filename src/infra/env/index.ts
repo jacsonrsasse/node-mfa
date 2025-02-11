@@ -9,6 +9,7 @@ const environmentSchema = z.object({
   HASHING_SECRET: z.string(),
   ENCRYPT_SECRET: z.string(),
   JWT_SECRET: z.string(),
+  ISSUER: z.string(),
 });
 
 const { data: env, error } = environmentSchema.safeParse(process.env);

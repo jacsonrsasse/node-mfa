@@ -33,13 +33,16 @@ export class RefreshTokenUseCase implements IRefreshTokenUseCase {
       await this.jwtService.sign({
         subject: userId.toString(),
       });
-    await this.userTokenRepository.delete(userToken);
-    await this.userTokenRepository.create(
-      UserToken.create({
-        userId,
-        refreshToken: newRefreshToken,
-      }),
-    );
+
+    await Promise.all([
+      this.userTokenRepository.delete(userToken),
+      this.userTokenRepository.create(
+        UserToken.create({
+          userId,
+          refreshToken: newRefreshToken,
+        }),
+      ),
+    ]);
 
     return right({
       accessToken,

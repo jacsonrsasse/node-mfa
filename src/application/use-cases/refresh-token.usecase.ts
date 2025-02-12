@@ -1,10 +1,10 @@
 import { UserToken } from '@domain/entities/user-token.entity';
 import { IUserTokenRepository } from '@domain/interfaces/repositories/user-token.repository';
-import { Response } from '@domain/interfaces/use-cases/login-usecase.interface';
+import { Response } from '@application/interfaces/use-cases/login-usecase.interface';
 import {
   IRefreshTokenUseCase,
   RefreshTokenExceptions,
-} from '@domain/interfaces/use-cases/refresh-token-usecase.interface';
+} from '@application/interfaces/use-cases/refresh-token-usecase.interface';
 import { IJwtService } from '@infra/jwt/jwt.interface';
 import { InvalidRefreshTokenException } from '@shared/exceptions';
 import { Either, left, right } from '@shared/monad/either';

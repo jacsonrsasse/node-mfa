@@ -5,7 +5,7 @@ import { IUserRepository } from '@domain/interfaces/repositories/user.repository
 import {
   ILoginUseCase,
   Response,
-} from '@domain/interfaces/use-cases/login-usecase.interface';
+} from '@application/interfaces/use-cases/login-usecase.interface';
 import { IEncryptgService } from '@infra/encrypt';
 import { IJwtService } from '@infra/jwt/jwt.interface';
 import { UnauthorizedByCredentials } from '@shared/exceptions';

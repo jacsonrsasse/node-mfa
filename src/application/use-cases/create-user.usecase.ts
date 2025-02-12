@@ -5,7 +5,7 @@ import { IUserRepository } from '@domain/interfaces/repositories/user.repository
 import {
   ICreateUserUseCase,
   UserCreationExceptions,
-} from '@domain/interfaces/use-cases/create-user-usecase.interface';
+} from '@application/interfaces/use-cases/create-user-usecase.interface';
 
 import { CreateUserDTO } from '@application/dtos/create-user.dto';
 

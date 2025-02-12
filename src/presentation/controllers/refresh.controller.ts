@@ -1,4 +1,4 @@
-import { IRefreshTokenUseCase } from '@domain/interfaces/use-cases/refresh-token-usecase.interface';
+import { IRefreshTokenUseCase } from '@application/interfaces/use-cases/refresh-token-usecase.interface';
 import { success, withError } from '@infra/http/fastify/response';
 import { Validator } from '@infra/validators/validator.interface';
 import { ValidationException } from '@shared/exceptions';

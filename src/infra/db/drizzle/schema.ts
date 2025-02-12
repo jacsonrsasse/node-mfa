@@ -49,8 +49,11 @@ export const userSecondFactorTable = sqliteTable(
     userId: integer('user_id')
       .references(() => userTable.id)
       .notNull(),
-    hash: text().notNull(),
-    validatedAt: text('validated_at'),
+    type: text({ enum: ['one_time_password', 'pin_email'] })
+      .notNull()
+      .default('one_time_password'),
+    otpHash: text('otp_hash'),
+    otpValidatedAt: text('otp_validated_at'),
     createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
   },
   (table) => [

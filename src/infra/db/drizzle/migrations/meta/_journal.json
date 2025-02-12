@@ -15,6 +15,13 @@
       "when": 1738995591763,
       "tag": "0001_graceful_bushwacker",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1739328839080,
+      "tag": "0002_magenta_blacklash",
+      "breakpoints": true
     }
   ]
 }

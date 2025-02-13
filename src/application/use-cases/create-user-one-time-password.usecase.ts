@@ -3,7 +3,7 @@ import { User2fa } from '@domain/entities/user-2fa.entity';
 import { IUser2faRepository } from '@domain/interfaces/repositories/user-2fa-repository.interface';
 import { IOtpService } from '@infra/2fa/otp/otp-service.interface';
 
-export class CreateUserSecondFactorUseCase
+export class CreateUserOneTimePasswordUseCase
   implements ICreateUserOneTimePasswordUseCase
 {
   constructor(

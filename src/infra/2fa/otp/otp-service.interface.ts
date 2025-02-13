@@ -6,7 +6,7 @@ export type GenerateOtpData = {
 };
 
 export interface IOtpService {
-  generateSecret(hexValue: string): string;
+  generateSecret(): string;
 
   generateOtpLink(data: GenerateOtpData): Promise<string> | string;
 }

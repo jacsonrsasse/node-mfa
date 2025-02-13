@@ -2,10 +2,11 @@ import { env } from '@infra/env';
 import { GenerateOtpData, IOtpService } from './otp-service.interface';
 import { Secret, TOTP } from 'otpauth';
 import { toString as qrcodeToString } from 'qrcode';
+import { randomBytes } from 'crypto';
 
 export class OtpAuthService implements IOtpService {
-  generateSecret(hexValue: string): string {
-    return Secret.fromHex(hexValue).base32;
+  generateSecret(): string {
+    return Secret.fromHex(randomBytes(42).toString('hex')).base32;
   }
 
   async generateOtpLink(data: GenerateOtpData): Promise<string> {

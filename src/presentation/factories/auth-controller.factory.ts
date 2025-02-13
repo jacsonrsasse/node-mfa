@@ -14,6 +14,11 @@ import { DrizzleUserTokenRepository } from '@infra/db/drizzle/repositories/drizz
 import { RefreshController } from '@presentation/controllers/refresh.controller';
 import { RefreshTokenUseCase } from '@application/use-cases/refresh-token.usecase';
 import { refreshTokenSchema } from '@infra/validators/zod/schemas/refresh-token.schema';
+import { OneTimePasswordController } from '@presentation/controllers/one-time-password.controller';
+import { CreateUserOneTimePasswordUseCase } from '@application/use-cases/create-user-one-time-password.usecase';
+import { OtpAuthService } from '@infra/2fa/otp/otp-auth.service';
+import { User2faRepository } from '@infra/db/drizzle/repositories/drizzle-user-2fa.repository';
+import { oneTimePasswordSchema } from '@infra/validators/zod/schemas/create-one-time-password.schema';
 
 const hashingService = new NodeEncryptService();
 const jwtService = new JwtService();
@@ -54,5 +59,23 @@ export class AuthControllerFacotry {
     );
 
     return new RefreshController(refreshTokenUseCase, refreshTokenValidator);
+  }
+
+  static createOneTimePassword() {
+    const otpService = new OtpAuthService();
+    const user2faRepository = new User2faRepository();
+
+    const createOneTimePasswordUserCase = new CreateUserOneTimePasswordUseCase(
+      otpService,
+      user2faRepository,
+    );
+    const createOneTimePasswordValidator = new ZodValidator<{
+      userId: number;
+    }>(oneTimePasswordSchema);
+
+    return new OneTimePasswordController(
+      createOneTimePasswordUserCase,
+      createOneTimePasswordValidator,
+    );
   }
 }

@@ -5,8 +5,15 @@ export const authRoutes = (fastify: FastifyInstance) => {
   const signUpController = AuthControllerFacotry.createSignUp();
   const loginController = AuthControllerFacotry.createLogin();
   const refreshController = AuthControllerFacotry.createRefreshToken();
+  const oneTimePasswordController =
+    AuthControllerFacotry.createOneTimePassword();
 
   fastify.post('/register', signUpController.handle.bind(signUpController));
   fastify.post('/login', loginController.handle.bind(loginController));
   fastify.post('/refresh', refreshController.handle.bind(refreshController));
+
+  fastify.get(
+    '/2fa/otp/:userId',
+    oneTimePasswordController.handle.bind(oneTimePasswordController),
+  );
 };

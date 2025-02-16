@@ -19,11 +19,17 @@ import { CreateUserOneTimePasswordUseCase } from '@application/use-cases/create-
 import { OtpAuthService } from '@infra/2fa/otp/otp-auth.service';
 import { User2faRepository } from '@infra/db/drizzle/repositories/drizzle-user-2fa.repository';
 import { oneTimePasswordSchema } from '@infra/validators/zod/schemas/create-one-time-password.schema';
+import { ValidateOneTimePasswordController } from '@presentation/controllers/validate-one-time-password.controller';
+import { ValidateOneTimePasswordUseCase } from '@application/use-cases/validate-one-time-password.usecase';
+import { validateOneTimePasswordSchema } from '@infra/validators/zod/schemas/validate-one-time-password.schema';
+import { ValidateUserOneTimePasswordDto } from '@application/dtos/validate-user-one-time-password.dto';
 
 const hashingService = new NodeEncryptService();
 const jwtService = new JwtService();
 const userRepository = new DrizzleUserRepository();
 const userTokenRepository = new DrizzleUserTokenRepository();
+const otpService = new OtpAuthService();
+const user2faRepository = new User2faRepository();
 
 export class AuthControllerFacotry {
   static createSignUp() {
@@ -62,9 +68,6 @@ export class AuthControllerFacotry {
   }
 
   static createOneTimePassword() {
-    const otpService = new OtpAuthService();
-    const user2faRepository = new User2faRepository();
-
     const createOneTimePasswordUserCase = new CreateUserOneTimePasswordUseCase(
       otpService,
       user2faRepository,
@@ -76,6 +79,22 @@ export class AuthControllerFacotry {
     return new OneTimePasswordController(
       createOneTimePasswordUserCase,
       createOneTimePasswordValidator,
+    );
+  }
+
+  static validateOneTimePassword() {
+    const validateOneTimePasswordUserCase = new ValidateOneTimePasswordUseCase(
+      user2faRepository,
+      otpService,
+    );
+    const validateOneTimePasswordValidator =
+      new ZodValidator<ValidateUserOneTimePasswordDto>(
+        validateOneTimePasswordSchema,
+      );
+
+    return new ValidateOneTimePasswordController(
+      validateOneTimePasswordUserCase,
+      validateOneTimePasswordValidator,
     );
   }
 }

@@ -17,6 +17,17 @@ export class DrizzleUserRepository implements IUserRepository {
     return !!result.length;
   }
 
+  async update(user: User): Promise<boolean> {
+    const result = await DrizzleClientService.getClient()
+      .update(userTable)
+      .set(UserMapper.toRepository(user))
+      .where(eq(userTable.id, user.id))
+      .returning({
+        id: userTable.id,
+      });
+    return !!result.length;
+  }
+
   async delete(user: User): Promise<boolean> {
     const result = await DrizzleClientService.getClient()
       .delete(userTable)

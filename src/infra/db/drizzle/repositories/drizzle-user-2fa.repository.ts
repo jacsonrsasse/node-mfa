@@ -17,6 +17,17 @@ export class User2faRepository implements IUser2faRepository {
     return !!result.length;
   }
 
+  async update(entity: User2fa): Promise<boolean> {
+    const result = await DrizzleClientService.getClient()
+      .update(userSecondFactorTable)
+      .set(User2faMapper.toRepository(entity))
+      .where(eq(userSecondFactorTable.userId, entity.userId))
+      .returning({
+        id: userSecondFactorTable.userId,
+      });
+    return !!result.length;
+  }
+
   async delete(entity: User2fa): Promise<boolean> {
     const result = await DrizzleClientService.getClient()
       .delete(userSecondFactorTable)

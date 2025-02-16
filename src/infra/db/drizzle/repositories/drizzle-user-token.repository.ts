@@ -17,6 +17,17 @@ export class DrizzleUserTokenRepository implements IUserTokenRepository {
     return !!result.length;
   }
 
+  async update(userToken: UserToken): Promise<boolean> {
+    const result = await DrizzleClientService.getClient()
+      .update(userTokenTable)
+      .set(UserTokenMapper.toRepository(userToken))
+      .where(eq(userTokenTable.userId, userToken.userId))
+      .returning({
+        id: userTokenTable.userId,
+      });
+    return !!result.length;
+  }
+
   async delete(userToken: UserToken): Promise<boolean> {
     const result = await DrizzleClientService.getClient()
       .delete(userTokenTable)

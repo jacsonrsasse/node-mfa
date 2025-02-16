@@ -1,1 +1,39 @@
-GET http://localhost:3000
+### Create User
+POST http://localhost:3000/auth/register 
+content-type: application/json
+
+{
+  "name": "",
+  "email": "",
+  "password": ""
+}
+
+### Login
+POST http://localhost:3000/auth/login 
+content-type: application/json
+
+{
+  "email": "",
+  "password": ""
+}
+
+### Refresh Token
+POST http://localhost:3000/auth/refresh
+content-type: application/json
+
+{
+  "refreshToken": ""
+}
+
+### Create one time password
+GET http://localhost:3000/auth/2fa/otp/1
+content-type: application/json
+
+### Validate one time password
+PATCH http://localhost:3000/auth/2fa/otp/validate
+content-type: application/json
+
+{
+  "userId": ,
+  "code": 
+}

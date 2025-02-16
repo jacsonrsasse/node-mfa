@@ -5,8 +5,14 @@ export type GenerateOtpData = {
   secret: string;
 };
 
+export type ValidateOtpData = GenerateOtpData & {
+  code: number;
+};
+
 export interface IOtpService {
   generateSecret(): string;
 
   generateOtpLink(data: GenerateOtpData): Promise<string> | string;
+
+  validate(data: ValidateOtpData): Promise<boolean> | boolean;
 }

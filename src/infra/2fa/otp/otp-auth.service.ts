@@ -32,10 +32,12 @@ export class OtpAuthService implements IOtpService {
       secret,
       subject,
     });
-    return !!totp.validate({
-      token: code.toString(),
-      window: 1,
-    });
+    return (
+      totp.validate({
+        token: code.toString(),
+        window: 1,
+      }) >= 0
+    );
   }
 
   private createTotp(data: GenerateOtpData) {
